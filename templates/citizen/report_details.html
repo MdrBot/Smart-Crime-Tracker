@@ -1,0 +1,96 @@
+{% extends "citizen/layout.html" %}
+
+{% block citizen_content %}
+
+<h2 class="mb-4">
+
+Crime Report Details
+
+</h2>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <tr>
+                <th width="220">Report ID</th>
+                <td>{{ report.report_id }}</td>
+            </tr>
+
+            <tr>
+                <th>Category</th>
+                <td>{{ report.category_name }}</td>
+            </tr>
+
+            <tr>
+                <th>Title</th>
+                <td>{{ report.title }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ report.description }}</td>
+            </tr>
+
+            <tr>
+                <th>Location</th>
+                <td>{{ report.location }}</td>
+            </tr>
+
+            <tr>
+                <th>Incident Date</th>
+                <td>{{ report.incident_date }}</td>
+            </tr>
+
+            <tr>
+                <th>Report Date</th>
+                <td>{{ report.report_date }}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>
+
+                    {% if report.status == "Pending" %}
+                        <span class="badge bg-warning text-dark">Pending Review</span>
+
+                    {% elif report.status == "Accepted" %}
+                        <span class="badge bg-primary">Accepted</span>
+
+                    {% elif report.status == "Under Investigation" %}
+                        <span class="badge bg-info">Under Investigation</span>
+
+                    {% elif report.status == "Rejected" %}
+                        <span class="badge bg-danger">Rejected</span>
+                        
+                        <div class="alert alert-danger mt-3">
+                        <strong>Reason:</strong>{{ report.rejection_reason }}</div>
+
+
+                    {% elif report.status == "Closed" %}
+                        <span class="badge bg-success">Closed</span>
+
+                    {% else %}
+                        {{ report.status }}
+                    {% endif %}
+
+                </td>
+            </tr>
+
+        </table>
+
+        <a
+        href="{{ url_for('citizen.my_reports') }}"
+        class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

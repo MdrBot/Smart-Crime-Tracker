@@ -1,0 +1,54 @@
+{% extends "admin/layout.html" %}
+
+{% block admin_content %}
+
+<div class="d-flex justify-content-between mb-4">
+
+    <h2>Police Officers</h2>
+
+    <a href="/admin/police/add"
+       class="btn btn-primary">
+
+        + Add Officer
+
+    </a>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Phone</th>
+            <th>Address</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for officer in police %}
+
+        <tr>
+
+            <td>{{ officer.user_id }}</td>
+            <td>{{ officer.full_name }}</td>
+            <td>{{ officer.username }}</td>
+            <td>{{ officer.phone }}</td>
+            <td>{{ officer.address }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

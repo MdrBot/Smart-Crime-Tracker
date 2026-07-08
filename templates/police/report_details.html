@@ -1,0 +1,189 @@
+{% extends "police/layout.html" %}
+
+{% block police_content %}
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        <h3>
+            Crime Report #{{ report.report_id }}
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered">
+
+            <tr>
+                <th width="200">Category</th>
+                <td>{{ report.category_name }}</td>
+            </tr>
+
+            <tr>
+                <th>Citizen</th>
+                <td>{{ report.full_name }}</td>
+            </tr>
+
+            <tr>
+                <th>Phone</th>
+                <td>{{ report.phone }}</td>
+            </tr>
+
+            <tr>
+                <th>Title</th>
+                <td>{{ report.title }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ report.description }}</td>
+            </tr>
+
+            <tr>
+                <th>Location</th>
+                <td>{{ report.location }}</td>
+            </tr>
+
+            <tr>
+                <th>Incident Date</th>
+                <td>{{ report.incident_date }}</td>
+            </tr>
+
+            <tr>
+                <th>Evidence</th>
+                <td>{{ report.evidence }}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>
+
+                {% if report.status == "Pending" %}
+
+                <span class="badge bg-secondary">
+                    Pending
+                </span>
+
+                {% elif report.status == "Under Investigation" %}
+
+                <span class="badge bg-warning text-dark">
+                    Under Investigation
+                </span>
+
+                {% elif report.status == "Resolved" %}
+
+                <span class="badge bg-info">
+                    Resolved
+                </span>
+
+                {% elif report.status == "Closed" %}
+
+                <span class="badge bg-success">
+                    Closed
+                </span>
+
+            {% endif %}
+
+            </td>
+            </tr>
+
+        </table>
+
+        {% if report.assigned_officer is none %}
+
+        <a href="{{ url_for('police.register_fir',
+                    report_id=report.report_id) }}"
+            class="btn btn-success">
+
+            Register FIR
+
+        </a>
+
+        <a href="{{ url_for('police.reject_report',
+                    report_id=report.report_id) }}"
+            class="btn btn-danger">
+
+            Reject
+
+        </a>
+
+        {% elif report.status == "Rejected" %}
+
+            <span class="badge bg-danger">
+
+            Rejected
+
+            </span>
+
+        {% else %}
+
+        <button class="btn btn-secondary" disabled>
+
+            Case Already Assigned
+
+        </button>
+
+
+        <hr class="my-4">
+
+        <h5>Update Case Status</h5>
+
+        <form method="POST"
+            action="{{ url_for('police.update_status',
+                         report_id=report.report_id) }}">
+
+        <div class="row">
+
+        <div class="col-md-5">
+
+            <select name="status" class="form-select">
+
+                <option value="Under Investigation"
+                    {% if report.status=="Under Investigation" %}selected{% endif %}>
+                    Under Investigation
+                </option>
+
+                <option value="Resolved"
+                    {% if report.status=="Resolved" %}selected{% endif %}>
+                    Resolved
+                </option>
+
+                <option value="Closed"
+                    {% if report.status=="Closed" %}selected{% endif %}>
+                    Closed
+                </option>
+
+            </select>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <button class="btn btn-primary">
+
+                    Update Status
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+{% endif %}
+
+    <a href="{{ url_for('police.pending_reports') }}"
+    class="btn btn-secondary">
+
+        Back
+
+    </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "admin/layout.html" %}
+
+{% block admin_content %}
+
+<h2 class="mb-4">
+
+Citizen Feedback
+
+</h2>
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>ID</th>
+<th>Citizen</th>
+<th>Message</th>
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for feedback in feedbacks %}
+
+<tr>
+
+<td>{{ feedback.feedback_id }}</td>
+
+<td>{{ feedback.full_name }}</td>
+
+<td>{{ feedback.message }}</td>
+
+<td>{{ feedback.feedback_date }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% if feedbacks|length == 0 %}
+
+<div class="alert alert-info">
+
+No feedback available.
+
+</div>
+
+{% endif %}
+
+{% endblock %}

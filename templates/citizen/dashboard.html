@@ -1,0 +1,110 @@
+{% extends "citizen/layout.html" %}
+
+{% block citizen_content %}
+
+<h2 class="mb-4">
+
+Welcome, {{ session.full_name }}
+
+</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="card text-center text-white bg-dark shadow">
+
+            <div class="card-body">
+
+                <h5>Total Reports</h5>
+
+                <h2>{{ total_reports }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center bg-warning text-dark shadow">
+
+            <div class="card-body">
+
+                <h5>Pending</h5>
+
+                <h2>{{ pending_reports }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-3 mb-3">
+
+    <div class="card text-center text-white bg-primary shadow">
+
+        <div class="card-body">
+
+                <h5>FIR Registered</h5>
+
+                <h2>{{ fir_registered }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center bg-info shadow">
+
+            <div class="card-body">
+
+                <h5>Investigating</h5>
+
+                <h2>{{ investigating }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-3">
+
+    <div class="card text-white text-center bg-danger shadow">
+
+        <div class="card-body">
+
+                <h5>Rejected</h5>
+
+                <h2>{{ rejected }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center bg-success shadow">
+
+            <div class="card-body">
+
+                <h5>Closed</h5>
+
+                <h2>{{ closed }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

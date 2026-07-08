@@ -1,0 +1,57 @@
+{% extends "police/layout.html" %}
+
+{% block police_content %}
+
+<h2 class="mb-4">
+    Welcome Officer {{ session.full_name }}
+</h2>
+
+<div class="row g-3">
+
+    <div class="col">
+        <div class="card text-dark bg-warning shadow h-100">
+            <div class="card-body text-center">
+                <h5>Pending Report</h5>
+                <h2>{{ pending_reports }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card text-white bg-primary shadow h-100">
+            <div class="card-body text-center">
+                <h5>FIR Registered</h5>
+                <h2>{{ fir_registered }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-info text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Investigation</h5>
+                <h2>{{ investigating }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card text-white bg-danger shadow h-100">
+            <div class="card-body text-center">
+                <h5>Rejected</h5>
+                <h2>{{ rejected }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-success text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Closed Cases</h5>
+                <h2>{{ closed }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

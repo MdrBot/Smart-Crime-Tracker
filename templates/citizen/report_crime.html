@@ -1,0 +1,135 @@
+{% extends "citizen/layout.html" %}
+
+{% block citizen_content %}
+
+<h2 class="mb-4">
+
+Report Crime
+
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Crime Category
+
+</label>
+
+<select name="category_id" class="form-select" required>
+
+    <option value="" selected disabled>
+        ---- Select Crime Category ----
+    </option>
+
+    {% for category in categories %}
+
+    <option value="{{ category.category_id }}">
+        {{ category.category_name }}
+    </option>
+
+    {% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Title
+
+</label>
+
+<input
+type="text"
+name="title"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Description
+
+</label>
+
+<textarea
+name="description"
+rows="5"
+class="form-control"
+required></textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Location
+
+</label>
+
+<input
+type="text"
+name="location"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Incident Date
+
+</label>
+
+<input
+type="date"
+name="incident_date"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Evidence (Optional)
+
+</label>
+
+<input
+type="file"
+name="evidence"
+class="form-control">
+
+</div>
+
+<button
+class="btn btn-danger">
+
+Submit Report
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

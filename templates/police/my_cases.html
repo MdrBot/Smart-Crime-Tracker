@@ -1,0 +1,95 @@
+{% extends "police/layout.html" %}
+
+{% block police_content %}
+
+<h2 class="mb-4">
+
+My Cases
+
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Category</th>
+<th>Title</th>
+<th>Location</th>
+<th>Incident Date</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for report in reports %}
+
+<tr>
+
+<td>{{ report.report_id }}</td>
+
+<td>{{ report.category_name }}</td>
+
+<td>{{ report.title }}</td>
+
+<td>{{ report.location }}</td>
+
+<td>{{ report.incident_date }}</td>
+
+<td>
+
+<span class="badge bg-primary">
+
+{{ report.status }}
+
+</span>
+
+</td>
+
+<td>
+
+<a href="{{ url_for('police.report_details',
+                    report_id=report.report_id) }}"
+   class="btn btn-sm btn-primary">
+
+View
+
+</a>
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+No assigned cases.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

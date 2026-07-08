@@ -1,0 +1,42 @@
+{% extends "citizen/layout.html" %}
+
+{% block citizen_content %}
+
+<h2>Edit Feedback</h2>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            <label>Your Feedback</label>
+
+            <textarea
+                name="message"
+                rows="6"
+                class="form-control"
+                required>{{ feedback.message }}</textarea>
+
+            <br>
+
+            <button class="btn btn-primary">
+
+                Update Feedback
+
+            </button>
+
+            <a href="{{ url_for('citizen.feedback') }}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

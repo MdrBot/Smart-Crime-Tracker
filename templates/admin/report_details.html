@@ -1,0 +1,80 @@
+{% extends "admin/layout.html" %}
+
+{% block admin_content %}
+
+<h2 class="mb-4">
+
+Crime Report Details
+
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table">
+
+<tr>
+<th width="220">Report ID</th>
+<td>{{ report.report_id }}</td>
+</tr>
+
+<tr>
+<th>Citizen</th>
+<td>{{ report.full_name }}</td>
+</tr>
+
+<tr>
+<th>Category</th>
+<td>{{ report.category_name }}</td>
+</tr>
+
+<tr>
+<th>Title</th>
+<td>{{ report.title }}</td>
+</tr>
+
+<tr>
+<th>Description</th>
+<td>{{ report.description }}</td>
+</tr>
+
+<tr>
+<th>Location</th>
+<td>{{ report.location }}</td>
+</tr>
+
+<tr>
+<th>Date</th>
+<td>{{ report.report_date }}</td>
+</tr>
+
+<tr>
+<th>Status</th>
+<td>
+
+<span class="badge bg-primary">
+
+{{ report.status }}
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+<a
+href="{{ url_for('admin.reports') }}"
+class="btn btn-secondary">
+
+Back
+
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "admin/layout.html" %}
+
+{% block admin_content %}
+
+<h2 class="mb-4">
+
+    Welcome,
+    {{ session.full_name }}
+
+</h2>
+
+<h4 class="mb-3">System Overview</h4>
+
+<div class="row g-3 mb-4">
+
+    <div class="col">
+        <div class="card bg-dark text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Total Users</h5>
+                <h2>{{ total_users }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-primary text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Police</h5>
+                <h2>{{ total_police }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-success text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Citizens</h5>
+                <h2>{{ total_citizens }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-secondary text-white shadow h-100">
+            <div class="card-body text-center">
+                <h5>Total Reports</h5>
+                <h2>{{ total_reports }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<h4 class="mt-4 mb-3">Case Status Overview</h4>
+
+<div class="row g-3">
+
+    <div class="col">
+        <div class="card bg-warning text-white shadow h-100">
+            <div class="card-body text-center">
+                <h6>Pending Reports</h6>
+                <h2>{{ pending_cases }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-primary text-white shadow h-100">
+            <div class="card-body text-center">
+                <h6>FIR Registered</h6>
+                <h2>{{ fir }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-info text-white shadow h-100">
+            <div class="card-body text-center">
+                <h6>Investigation</h6>
+                <h2>{{ investigation }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-danger text-white shadow h-100">
+            <div class="card-body text-center">
+                <h6>Rejected</h6>
+                <h2>{{ rejected }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card bg-success text-white shadow h-100">
+            <div class="card-body text-center">
+                <h6>Closed</h6>
+                <h2>{{ closed }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

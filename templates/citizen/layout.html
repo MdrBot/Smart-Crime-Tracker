@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="list-group shadow">
+
+            <a href="{{ url_for('citizen.dashboard') }}"
+               class="list-group-item list-group-item-action active">
+
+                🏠 Dashboard
+
+            </a>
+
+            <a href="{{ url_for('citizen.report_crime') }}"
+               class="list-group-item list-group-item-action">
+
+                📝 Report Crime
+
+            </a>
+
+            <a href="{{ url_for('citizen.my_reports') }}"
+               class="list-group-item list-group-item-action">
+
+                📄 My Reports
+
+            </a>
+
+            <a href="{{ url_for('citizen.profile') }}"
+               class="list-group-item list-group-item-action">
+
+                👤 My Profile
+
+            </a>
+
+            <a href="{{ url_for('citizen.feedback') }}"
+               class="list-group-item list-group-item-action">
+
+                💬 Feedback
+
+            </a>
+
+            <a href="{{ url_for('auth.logout') }}"
+               class="list-group-item list-group-item-action text-danger">
+
+                🚪 Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-9">
+
+        {% block citizen_content %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
+{% endblock %}
