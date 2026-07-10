@@ -1,9 +1,3 @@
-"""
-===========================================
-Smart Crime Tracker System
-Configuration File
-===========================================
-"""
 
 import os
 
