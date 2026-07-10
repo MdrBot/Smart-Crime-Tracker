@@ -41,7 +41,7 @@ My Crime Reports
 
 <td>
 
-{% if report.status=="Pending Review" %}
+{% if report.status == "Pending" or report.status == "Pending Review" %}
 
 <span class="badge bg-warning text-dark">
 

@@ -52,8 +52,46 @@
             </tr>
 
             <tr>
+                <th>Case Created</th>
+                <td>{{ report.created_at }}</td>
+            </tr>
+
+            <tr>
+                <th>Case Closed</th>
+                <td>
+                {% if report.closed_at %}
+                    {{ report.closed_at }}
+                {% else %}
+                -
+                {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Completion Time</th>
+                <td>
+                {% if duration %}
+                    {{ duration }}
+                {% else %}
+                    Case still in progress
+                {% endif %}
+            </td>
+            </tr>
+
+            <tr>
                 <th>Evidence</th>
                 <td>{{ report.evidence }}</td>
+            </tr>
+
+            <tr>
+                <th>Officer Remarks</th>
+                <td>
+                {% if report.closing_remarks %}
+                    {{ report.closing_remarks }}
+                {% else %}
+                    No remarks available.
+                {% endif %}
+            </td>
             </tr>
 
             <tr>
@@ -70,12 +108,6 @@
 
                 <span class="badge bg-warning text-dark">
                     Under Investigation
-                </span>
-
-                {% elif report.status == "Resolved" %}
-
-                <span class="badge bg-info">
-                    Resolved
                 </span>
 
                 {% elif report.status == "Closed" %}
@@ -134,44 +166,49 @@
             action="{{ url_for('police.update_status',
                          report_id=report.report_id) }}">
 
-        <div class="row">
+            <div class="mb-3">
 
-        <div class="col-md-5">
+                <label class="form-label">
+                    Status
+                </label>
 
-            <select name="status" class="form-select">
+                <select name="status" class="form-select">
 
-                <option value="Under Investigation"
-                    {% if report.status=="Under Investigation" %}selected{% endif %}>
-                    Under Investigation
-                </option>
+                    <option value="Under Investigation"
+                        {% if report.status=="Under Investigation" %}selected{% endif %}>
+                        Under Investigation
+                    </option>
 
-                <option value="Resolved"
-                    {% if report.status=="Resolved" %}selected{% endif %}>
-                    Resolved
-                </option>
+                    <option value="Closed"
+                        {% if report.status=="Closed" %}selected{% endif %}>
+                        Closed
+                    </option>
 
-                <option value="Closed"
-                    {% if report.status=="Closed" %}selected{% endif %}>
-                    Closed
-                </option>
-
-            </select>
+                </select>
 
             </div>
 
-            <div class="col-md-3">
+            <div class="mb-3">
 
-                <button class="btn btn-primary">
+                <label class="form-label">
+                    Investigation / Closing Remarks<span class="text-danger">*</span>
+                </label>
 
-                    Update Status
-
-                </button>
+                <textarea
+                name="closing_remarks"
+                class="form-control"
+                rows="4"
+                placeholder="Enter investigation update or closing remarks...">{{ report.closing_remarks or '' }}</textarea>
 
             </div>
 
-        </div>
+        <button class="btn btn-primary">
 
-    </form>
+            Update Status
+
+        </button>
+
+</form>
 
 {% endif %}
 

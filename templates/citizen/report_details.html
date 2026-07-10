@@ -50,6 +50,29 @@ Crime Report Details
             </tr>
 
             <tr>
+                <th>Case Closed</th>
+
+                <td>
+                {% if report.closed_at %}
+                    {{ report.closed_at }}
+                {% else %}
+                    Case is still in progress
+                {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Time Taken</th>
+                <td>
+                    {% if duration %}
+                        {{ duration }}
+                {% else %}
+                    Case is still in progress
+                {% endif %}
+                </td>
+            </tr>
+
+            <tr>
                 <th>Status</th>
                 <td>
 
@@ -76,6 +99,17 @@ Crime Report Details
                         {{ report.status }}
                     {% endif %}
 
+                </td>
+            </tr>
+            <tr>
+                <th>Officer Remarks</th>
+                <td>
+                    {% if report.closing_remarks %}
+                    {{ report.closing_remarks }}
+                {% else %}
+                    No remarks available yet.
+                
+                {% endif %}
                 </td>
             </tr>
 

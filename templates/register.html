@@ -15,25 +15,33 @@
             <form method="POST" action="{{ url_for('auth.register') }}">
 
                 <div class="mb-3">
-                    <label class="form-label">Full Name</label>
+                    <label class="form-label">Full Name <span class="text-danger">*</span></label>
                     <input
-                        type="text"
-                        name="full_name"
-                        class="form-control"
-                        required>
+                    type="text"
+                    name="full_name"
+                    class="form-control"
+                    required
+                    minlength="3"
+                    maxlength="50"
+                    pattern="[A-Za-z ]+"
+                    title="Full name can contain only letters and spaces.">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Username</label>
+                    <label class="form-label">Username <span class="text-danger">*</span></label>
                     <input
-                        type="text"
-                        name="username"
-                        class="form-control"
-                        required>
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    required
+                    pattern="[A-Za-z][A-Za-z0-9_ ]*"
+                    minlength="3"
+                    maxlength="30"
+                    title="Username must start with a letter and can contain letters, numbers and underscores.">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Phone</label>
+                    <label class="form-label">Phone <span class="text-danger">*</span></label>
                     <input
                         type="tel"
                         name="phone"
@@ -44,7 +52,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Address</label>
+                    <label class="form-label">Address <span class="text-danger">*</span></label>
                     <textarea
                         name="address"
                         class="form-control"
@@ -53,12 +61,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Password</label>
+                    <label class="form-label">Password <span class="text-danger">*</span></label>
                     <input
                         type="password"
                         name="password"
                         class="form-control"
                         required>
+                        <small class="text-muted">
+                        Password must be at least 8 characters long and contain at least one uppercase letter and one number.
+                        </small>
                 </div>
 
                 <button

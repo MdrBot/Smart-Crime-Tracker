@@ -21,14 +21,42 @@ Crime Report Details
 
 <tr>
 <th>Citizen</th>
-<td>{{ report.full_name }}</td>
+<td>{{ report.citizen_name }}</td>
 </tr>
-
+<tr>
+    <th>Assigned Officer</th>
+    <td>
+        {% if report.officer_name %}
+            {{ report.officer_name }}
+        {% else %}
+            Not Assigned
+        {% endif %}
+    </td>
+</tr>
 <tr>
 <th>Category</th>
 <td>{{ report.category_name }}</td>
 </tr>
-
+<tr>
+    <th>FIR Number</th>
+    <td>
+        {% if report.fir_number %}
+            {{ report.fir_number }}
+        {% else %}
+            Not Registered
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <th>FIR Registered On</th>
+    <td>
+        {% if report.filing_date %}
+            {{ report.filing_date }}
+        {% else %}
+            -
+        {% endif %}
+    </td>
+</tr>
 <tr>
 <th>Title</th>
 <td>{{ report.title }}</td>
@@ -45,14 +73,104 @@ Crime Report Details
 </tr>
 
 <tr>
-<th>Date</th>
-<td>{{ report.report_date }}</td>
+    <th>Incident Date</th>
+    <td>{{ report.incident_date }}</td>
 </tr>
 
 <tr>
-<th>Status</th>
-<td>
+    <th>Report Submitted</th>
+    <td>{{ report.created_at }}</td>
+</tr>
 
+<tr>
+
+    <th>Status</th>
+
+    <td>
+
+        {% if report.status == "Pending" %}
+
+            <span class="badge bg-warning text-dark">
+                Pending
+            </span>
+
+        {% elif report.status == "Pending Review" %}
+
+            <span class="badge bg-warning text-dark">
+                Pending Review
+            </span>
+
+        {% elif report.status == "FIR Registered" %}
+
+            <span class="badge bg-primary">
+                FIR Registered
+            </span>
+
+        {% elif report.status == "Under Investigation" %}
+
+            <span class="badge bg-info text-dark">
+                Under Investigation
+            </span>
+
+        {% elif report.status == "Closed" %}
+
+            <span class="badge bg-success">
+                Closed
+            </span>
+
+        {% elif report.status == "Rejected" %}
+
+            <span class="badge bg-danger">
+                Rejected
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-secondary">
+                {{ report.status }}
+            </span>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+<tr>
+    <th>Officer Remarks</th>
+    <td>
+        {% if report.closing_remarks %}
+            {{ report.closing_remarks }}
+        {% else %}
+            No remarks available.
+        {% endif %}
+    </td>
+</tr>
+{% if report.status == "Rejected" %}
+<tr>
+    <th>Rejection Reason</th>
+    <td>{{ report.rejection_reason }}</td>
+</tr>
+{% endif %}
+<tr>
+    <th>Case Closed</th>
+    <td>
+        {% if report.closed_at %}
+            {{ report.closed_at }}
+        {% else %}
+            Case is still active
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <th>Completion Time</th>
+    <td>
+        {% if duration %}
+            {{ duration }}
+        {% else %}
+            Case is still in progress
+        {% endif %}
+    </td>
+</tr>
 <span class="badge bg-primary">
 
 {{ report.status }}

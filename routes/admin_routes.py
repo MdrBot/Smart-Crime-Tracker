@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, flash
 
 from modules.auth_service import auth_service
 from database import db
+from datetime import datetime
 
 admin_bp = Blueprint(
     "admin",
@@ -197,32 +198,57 @@ def report_details(report_id):
     if session.get("role") != "Admin":
         return redirect("/login")
 
-    report = db.fetchone(
-        """
+    report = db.fetchone("""
         SELECT
             cr.*,
-            u.full_name,
-            c.category_name
+            citizen.full_name AS citizen_name,
+            c.category_name,
+            officer.full_name AS officer_name,
+            f.fir_number,
+            f.filing_date
         FROM crime_reports cr
-
-        JOIN users u
-            ON cr.citizen_id = u.user_id
-
+        JOIN users citizen
+            ON cr.citizen_id = citizen.user_id
         LEFT JOIN crime_categories c
             ON cr.category_id = c.category_id
-
-        WHERE cr.report_id = ?
+        LEFT JOIN users officer
+            ON cr.assigned_officer = officer.user_id
+        LEFT JOIN fir f
+            ON cr.report_id = f.report_id
+        WHERE cr.report_id=?
         """,
-        (report_id,)
-    )
+        (report_id,))
 
     if report is None:
         flash("Crime report not found.")
         return redirect("/admin/reports")
 
+    duration = None
+
+    if report["created_at"] and report["closed_at"]:
+
+        start = datetime.strptime(
+            report["created_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        end = datetime.strptime(
+            report["closed_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        diff = end - start
+
+        days = diff.days
+        hours = diff.seconds // 3600
+        minutes = (diff.seconds % 3600) // 60
+
+        duration = f"{days} days, {hours} hours, {minutes} minutes"
+    
     return render_template(
         "admin/report_details.html",
-        report=report
+        report=report,
+        duration=duration
     )
 
 @admin_bp.route("/admin/feedback")

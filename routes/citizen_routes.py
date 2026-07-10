@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, request, flash
 from database import db
 from modules.auth_service import auth_service
+from datetime import datetime
 
 citizen_bp = Blueprint(
     "citizen",
@@ -154,12 +155,13 @@ def report_crime():
                 location,
                 incident_date,
                 report_date,
+                created_at,
                 status
             )
 
             VALUES
             (
-                ?, ?, ?, ?, ?, ?, datetime('now'), 'Pending'
+                ?, ?, ?, ?, ?, ?, datetime('now','localtime'), datetime('now','localtime'), 'Pending'
             )
             """,
             (
@@ -212,9 +214,33 @@ def report_details(report_id):
 
         return redirect("/citizen/reports")
 
+    
+    duration = None
+
+    if report["created_at"] and report["closed_at"]:
+
+        start = datetime.strptime(
+            report["created_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        end = datetime.strptime(
+            report["closed_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        diff = end - start
+
+        days = diff.days
+        hours = diff.seconds // 3600
+        minutes = (diff.seconds % 3600) // 60
+
+        duration = f"{days} days, {hours} hours, {minutes} minutes"
+    
     return render_template(
         "citizen/report_details.html",
-        report=report
+        report=report,
+        duration=duration
     )
 
 @citizen_bp.route("/citizen/profile", methods=["GET", "POST"])
@@ -350,7 +376,7 @@ def feedback():
             )
             VALUES
             (
-                ?, ?, datetime('now')
+                ?, ?, datetime('now','localtime')
             )
         """,
         (

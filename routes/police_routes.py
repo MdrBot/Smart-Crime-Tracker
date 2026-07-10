@@ -135,9 +135,32 @@ def report_details(report_id):
 
         return redirect("/police")
 
+    duration = None
+
+    if report["created_at"] and report["closed_at"]:
+
+        start = datetime.strptime(
+            report["created_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        end = datetime.strptime(
+            report["closed_at"],
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        diff = end - start
+
+        days = diff.days
+        hours = diff.seconds // 3600
+        minutes = (diff.seconds % 3600) // 60
+
+        duration = f"{days} day(s), {hours} hour(s), {minutes} minute(s)"
+    
     return render_template(
         "police/report_details.html",
-        report=report
+        report=report,
+        duration=duration
     )
 
 @police_bp.route("/police/report/<int:report_id>/register-fir")
@@ -186,7 +209,7 @@ def register_fir(report_id):
         )
         VALUES
         (
-            ?, ?, ?, datetime('now'), ?, 'Registered'
+            ?, ?, ?, datetime('now','localtime'), ?, 'Registered'
         )
     """,
     (
@@ -386,20 +409,48 @@ def update_status(report_id):
         return redirect("/login")
 
     new_status = request.form["status"]
+    closing_remarks = request.form.get("closing_remarks", "")
+    if new_status == "Closed" and not closing_remarks.strip():
 
-    db.execute("""
-        UPDATE crime_reports
+        flash("Please provide closing remarks before closing the case.")
 
-        SET status=?
+        return redirect(f"/police/report/{report_id}")
 
-        WHERE report_id=?
-        AND assigned_officer=?
-    """,
-    (
+    if new_status == "Closed":
+
+        db.execute("""
+            UPDATE crime_reports
+
+            SET
+            status=?,
+            closed_at=datetime('now','localtime'),
+            closing_remarks=?
+
+            WHERE report_id=?
+            AND assigned_officer=?
+            """,
+        (
         new_status,
+        closing_remarks,
         report_id,
         session["user_id"]
-    ))
+        ))
+
+    else:
+
+        db.execute("""
+            UPDATE crime_reports
+
+            SET status=?
+
+            WHERE report_id=?
+            AND assigned_officer=?
+        """,
+        (
+            new_status,
+            report_id,
+            session["user_id"]
+        ))
 
     flash("Case status updated successfully.")
 

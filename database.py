@@ -20,9 +20,7 @@ class Database:
         self.create_default_admin()
         self.connection.commit()
 
-    # ==========================================================
     # Generic Database Methods
-    # ==========================================================
 
     def execute(self, query, parameters=()):
         self.cursor.execute(query, parameters)
@@ -40,9 +38,7 @@ class Database:
         if self.connection:
             self.connection.close()
 
-    # ==========================================================
     # Database Schema
-    # ==========================================================
 
     def create_tables(self):
         """
@@ -69,23 +65,6 @@ class Database:
             address TEXT,
 
             status TEXT DEFAULT 'Active'
-        )
-        """)
-
-        # ---------------- POLICE STATIONS ----------------
-
-        self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS police_stations(
-
-            station_id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            station_name TEXT NOT NULL,
-
-            district TEXT,
-
-            address TEXT,
-
-            contact TEXT
         )
         """)
 
@@ -140,6 +119,10 @@ class Database:
             incident_date TEXT NOT NULL,
 
             report_date TEXT NOT NULL,
+            
+            created_at TEXT,
+
+            closed_at TEXT,
 
             status TEXT DEFAULT 'Pending Review',
 
@@ -177,29 +160,6 @@ class Database:
 
             FOREIGN KEY(registered_by)
                 REFERENCES users(user_id)
-        )
-        """)
-
-        # ---------------- CRIMINAL DATABASE ----------------
-
-        self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS criminals(
-
-            criminal_id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            full_name TEXT NOT NULL,
-
-            age INTEGER,
-
-            gender TEXT,
-
-            address TEXT,
-
-            crime_details TEXT,
-
-            status TEXT,
-
-            arrest_date TEXT
         )
         """)
 
@@ -295,8 +255,5 @@ class Database:
         print("Password : admin123")
 
 
-# ==========================================================
-# Global Database Object
-# ==========================================================
 
 db = Database()
